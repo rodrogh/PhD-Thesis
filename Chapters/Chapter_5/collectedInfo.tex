@@ -1,0 +1,153 @@
+\subsection{Work history}
+\begin{itemize}
+    \item 15/May/18: First mention of Artificial Neural Networks as a way to predict the complex behaviour of the soft materials of interest. The latter is motivated by the limitations of the complex mathematical model and fitting process. The first step was to use Matlab to quickly test the performance of simple feedforward networks using the raw data from the tensile strength experiments.
+    \item 17/May/18: Simple preliminary tests shows promising results. The following is required: 
+    \begin{itemize}
+        \item Understand the motivation of using neural networks (quicker, robust and simpler way to model a complex behaviour).
+        \item Define network inputs/outputs.
+        \item Perform detailed literature review on the implementation of neural networks for characterization of materials.
+    \end{itemize}
+    \item Check logbook pages at meeting of 17/May/18 for summary of the literature review performed and Google Scholar search parameters.
+    \item The most relevant work found was dated from 2015 and titled ``Prediction of stress relaxation for rubber composites''. An improved radial basis function (RBF) is used to predict the stress relaxation curve of rubbers.
+    \item 12/Jun/18 Task: Review 2015 paper on ANN for rubbers.
+    \item 10/Jul/18 Meeting highlights: 
+    \begin{itemize}
+        \item Perform extra tensile strength experiments to increase the current set of data, potentially improving the neural network response. 
+        \item Journal Paper (Modelling): The work done on the viscoelastic mathematical models and the artificial neural networks can be compiled into a good journal paper.
+    \end{itemize}
+    Tasks:
+    \begin{itemize}
+        \item Review literature and base on it the experimentation being done on ANN
+        \item Identify the soft material (Silicone Rubber) for which the mathematical model yielded the highest error (worst performance).
+        \item Test the performance of different neural networks architectures on the identified soft material.
+    \end{itemize}
+    \item Important Notes - Most used neural networks architectures for prediction of materials' properties
+    \begin{itemize}
+        \item Supervised Networks
+        \begin{itemize}
+            \item Feedforward Networks
+            \begin{itemize}
+                \item Backpropagation
+                \item Perceptron
+            \end{itemize}
+            \item Radial Basis Function
+            \begin{itemize}
+                \item Genetic Algorithm
+                \item Bare-bone Particle Swarm Optimization
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+    \item First Formal Experimentation 
+    \begin{itemize}
+        \item Dataset - In the literature, the data from 20 different experiments (on average) is used for the training of neural networks. In accordance with this, there is not enough data to properly test the performance of the neural networks. However, we decided to move forward and test the neural networks using the following:
+        \begin{itemize}
+            \item Ethylene Polypropylene Rubber (EPR): 5 sets
+            \item Flourocarbon Rubber (FR): 8 sets
+            \item Natural Rubber (NatR): 7 sets
+            \item Nitrile Rubber (NR): 7 sets
+            \item Polyethylene Rubber 6mm (PR): 7 sets
+            \item Silicone Rubber (SR): 8 sets
+        \end{itemize}
+        \item Parameters:
+        \begin{itemize}
+            \item Network achitecture: feedforward backpropagation
+            \item Number of hidden layers: 1
+            \item Number of neurons in the hidden layer: 10
+            \item Inputs: strain and strain rate
+            \item Output: stress
+            \item Data: Raw data used, data beyond the ultimate load is discarded to increase prediction accuracy
+        \end{itemize}
+        \item Results
+        \begin{itemize}
+            \item Comparison Analysis (documented in StressResponse.png and StressResponseFull.png):
+            \begin{itemize}
+                \item Raw Data Neural Networks
+                \item Preprocessed Data Neural Networks
+                \item Preprocessed Data Mathematical Model
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+    \item 17/Jul/18 Meeting Highlights:
+    \begin{itemize}
+        \item Train neural network with preprocessed data
+        \item At this point, only feedforward architecture has been tested. Radial Basis Function must also be tested
+    \end{itemize}
+    \item 18/Jul/18 Meeting Highlights:
+    \begin{itemize}
+        \item Focus on obtaining the performance (mean squared error) of the neural networks when different numbers of neurons are used in the hidden layer
+        \item Certain parameters must be considered when assessing the performance of neural networks, such as momentum and learning rate
+        \item The performance of neural networks can be analyzed in a shorter deformation range in accordance to the application (activities of daily living, knee) we are interested in. This can also result in better performance and faster training times.
+        \item First exploration to perform and observe the behaviour of the neural networks: number of neurons (increase to 15)
+        \item Uriel's suggestion: Recurrent Neural Networks
+    \end{itemize}
+    \item Important Notes - Exploration progress is documented in the logbook after the meeting of 18/Jul/18. The many tests performed are detailed in there. In summary:
+    \begin{itemize}
+        \item The analysis regarding the effect of varying the number of neurons in the hidden layer highlighted an ideal range in which the best performance (lowest mse) is obtained. Overall, less than 10 neurons are required to obrain a good generalization.
+        \item Adding a second hidden layer has no meaningful effect on the performance of feedforward networks.
+        \item A data division of [80,10,10] for training, test and validation, respectively, was suitable for these networks. The recommended spread is [70,15,15] which was also tested
+        \item Multiple training sessions were performed on the networks with best performance to increase their generalization capabilities, as recommended in the literature.
+        \item The neural networks performance was assessed for two scenarios: full range, and elastic region of stress-strain curve. The effect of adding a second hidden layer and performing multiple training sessions is more noticeable in the elastic region scenario.
+    \end{itemize}
+    \item Important Notes - Feedforward Back-propagation networks have proven useful for modelling of the soft materials. However, other architectures such as Recurrent Neural Networks might perform even better. This needs to be investigated.
+    \item 31/Jul/18
+    \item 4/Aug/18
+    \item Simulink analysis
+    \begin{itemize}
+        \item The first attempt to compare the performance of the neural networks when modelling the elastic element of a series-elastic actuator was UNSATISFACTORY. I focused on investigating the latter. Potentially, the fact that the elastic element can only be modelled under tension was not described properly in Simulink. Another possibility is the fact that the data used to train the neural networks is slightly different than the one used for the mathematical model.
+        \item The transfer function was originally defined to take the material's deformation as input. In a real application, the material's deformation will be measured and use as an input to estimate the material's force.
+        \item Following the previous note. The behaviour of the material when the pulling force deforming it disappears must be investigated. This invert the current relationship analyzed where the deformation is considered as an input of the model. In a real application, a motor will create a pulling force to deform the material, this force must be used to calculate the material's deformation. This approach might be completely out of place since the main reason of using series elastic element (control-wise) is to simplify the control itself. This means that the deformation of the material is the only one required to be measured to estimate the material's force.
+        \item This analysis needs to be done again focusing on the soft material with best performance to make the process quicker.
+    \end{itemize}
+    \item 18/Feb/119 - Second Exploration performed
+    \begin{itemize}
+        \item In this stage we are assuming that the mathematical model is not able to predict a material's behaviour in a general way. This is the main justification for using neural networks since these can generalize the material's behaviour if trained correctly. The mathematical model has been tested when using plenty of strain segments in the piecewise linearization process, the more segments are used the less generalization is able to be obtained from the model. There must be a way to obtain the right number of strain segments which avoid over-fit. The latter is the best way to compare the neural network performance against the model.  
+        \item The best materials so far is the Flourocarbon Rubber, according to the paper presented in Innovationmatch MX (this needs to be reviewed). The following validation must be based on this material only, to quicken the process of proving the concept. 
+    \end{itemize}
+    
+\end{itemize}
+
+
+\begin{enumerate}
+    \item The first implementation of ANN on modelling the viscoelasticity of composite materials was performed by Zhang et al. \cite{zhang2002dynamic}. The viscoelasticity of a reinforced composite material is characterized by performing a dynamic mechanical thermo-analysis. From this test, the storage modulus and damping of the material are extracted, two properties which describe the stiffness of the material under dynamic loading. This work is focused on the effect of reinforcing a series of Polytetrafluoroethylene (PTFE) based composites with different amount of Polyetheretherketone (PEEK) and carbon fibres (CF). The effect of temperature was also studied. 
+    
+    The proposed ANN was a simple multilayer feedforward network with a single hidden layer. The inputs of the ANN are the temperature, and the volume percentage of PTFE, PEEK and CF, in the tested material. Whereas the outputs of the network are the storage modulus and the damping of the material. The prediction capabilities of the network were tested when having only one output, either the storage modulus or the damping, and having two outputs, and using the same amount of training set for both scenarios. A total of 25 neurons were used in the hidden layer. In summary, the proposed ANNs had the following structure: 4-[25]\textsubscript{1}-1 and  4-[25]\textsubscript{1}-2.
+    
+    The authors selected a tan-sigmoidal transfer function between the input and hidden layer, and a linear transfer function between the hidden and the output layer. The motivation behind this combination of transfer functions is to avoid limiting the output to having a small range. The authors opted for the Bayesian regularization backpropagation training algorithm, which uses the Levenberg-Marquardt optimization method to minimize the sum of square errors of a linear combination of weights and biased. The latter allows the algorithm to decide which neurons contribute the least on the solution of the problem and to shut them down during the training process, avoiding over-fitting. When using this algorithm, the main dataset is divided into training and a testing datasets. Although, the authors do not specify the percentage of the dataset used for training and testing. In this work, the coefficient of determination \[ R^{2} \] is used to assess the prediction capabilities of the trained ANN. This parameter was calculated for a total of 50 randomly selected test datasets and the percentage of $R^{2}\geq0.9$ values was extracted.
+    
+    They found that the amount of training sets required to achieve a 100 percentage of R values was different between the storage modulus and the damping. In the case for the storage modulus, only 40 training sets were required, whereas for the damping, more than 120 training sets were required. The authors conclude that the storage modulus had a stronger relationship with the selected inputs of the network. Although, it could also be the case that the damping of the material has a more complex nonlinear relationship which was unable to be modelled with the proposed ANN. Furthermore, they found that having two outputs instead of one had a similar effect in the amount of training set required to achieve a 100 percentage R values.
+    
+    Having successfully trained the ANNs, the authors used it to generate three-dimensional plots describing the relationship between the temperature and percentage of reinforcing materials, with the storage modulus and damping of the material for the space in which experimental data was not available. This allowed the understanding of how some material parameters and measuring conditions influence the dynamic mechanical properties.
+    
+    \item In the paper \cite{tho2004artificial}, the number of neurons are determined by trial an error. Neurons are added one by one during the training process. The MSE during training and validation is constantly monitored. The neural network will start over-fitting the data once the MSE during validation starts increasing while the MSE during training keeps decreasing. In this point, the adding of neurons is stopped. In here, the combination of tangent-sigmoid function on the hidden layer and linear function on the output layer is used as well.
+    \item Review of \cite{khan2019fabrication}. ANN is one of the most powerful approaches used in material sciences for predicting the physical, mechanical and tribological properties of complex materials. When accurate mathematical-based solutions are not available or too complex to implements, the biologically inspired computational method of ANN has emerged as an advanced modelling tool. The main function of ANN is to assemble the pattern from given data. ANN can learn from examples, like their biological counterparts, and can be trained to describe the functional relationship of complex phenomenons without previous knowledge of their nature. ANNs were first used to solve complex engineering problems in 1940. However, due to their ease of use and time-saving benefits, they have become very popular and are now used for many different applications, such as fore-casting, control, robotics, power systems, signal processing, manufacturing, pattern recognition and optimization. 
+    ANNs are computing systems that mimic the biological nerve cell system of human brain. These are adaptive models that can describe the complex connections between input parameters and output properties otherwise not possible with any analytical function. All the basic elements of ANNs are modelled after human brain; therefore, the terminology is borrowed from neuroscience accordingly. The most important element of human brain is specific cell known as neuron which enables us to memorize, think and use previous experiences to our daily life actions. 
+    Section 2.1 of this paper has a good definition of Artificial Neural Networks, use it for the thesis.
+    \item This work is very recent and directly linked to my research: \cite{rodriguez2019application}. In here, the stress-strain data from a single thermoplastic elastomers is used to train a FFNN. Thereafter, the same ANN architecture is used to predict the stress response of seven different thermoplastic elastomers. Which suggest that my initial methodology is correct, optimize the ANN acrchitecture for one material, and this same ANN  architecture could be useful for other materials. I have taken many important notes in the paper itself. The dataset used in this paper is very small, around 50 samples per strain-stress curve. I might need to use smaller datasets to make the training process faster and be inline with the literature. This work have steps of 2\% strain in the experimental data used for training the NN, which makes the NN biased towards large stress values, where the change in strain is small. My work could focus on filling this gap in the knowledge. I don't have to criticize the work they are doing. I can see this as two different approaches.
+    \item This paper, \cite{wang2007review} gives a good explanation of commonly used validation techniques. In ANN the cross-validation technique is very common, however, the leave one out approach is not enough to validate the model accuracy. The p-fold cross-validation approach seems to be the most reliable.
+    \item In this work \cite{xu2019artificial} an ANN which accounts for the strain rate of the materials is trained with three different strain rates. The trained and validated ANN was used to predict the elastic modulus of the materials under unknown strain rates.
+    \item The work of Jung et al. \cite{jung2006neural} is one of the first to try describing the viscoelasticity (time and rate-dependent properties) of materials using ANNs in combination with Finite Element Analysis. This paper might be relevant to be mentioned in a later part of the thesis. 
+\end{enumerate}
+
+In this paragraph I am going to summarize the different metrics used in the literature when assessing the performance of neural networks.
+
+Introduction Paragraph: The performance of a neural network for regression applications is assessed in two main parts, by analyzing the difference between the neural network prediction and the experimental data, and by analyzing the percentage of correct predictions. The former analysis refers to the neural network prediction error, which can be assessed by different statistical parameters. These are the ones most mentioned in the literature: mean square error (MSE), root mean square error (RMSE), the average relative error (AVE), the sum of square of errors (SSE), the mean absolute error (MAE), the standard deviation normalized root mean square error (NRMSE). 
+
+The preference between one parameter and the other is dependent on the type of application. (explain the main difference between these statistical measurements). This suggest filtering the references to include only the ones using a principal component analysis and the ones using the raw data itself.
+
+The latter analysis refers to the coefficient of determination, also known as R-squared ($R^2$). \cite{aulova2017determination,tho2004artificial,saha2018use,setti2014artificial,xu2019application}. 
+
+Pending: Get the bibtex version of the other relevant papers using neural networks for prediction of mechanical properties of soft materials. The list needs to be filtered to focus on viscoelastic cases, and mention a few other close-related cases
+
+In this work, the main objective is to design and train neural networks able to predict the mechanical behaviour of soft materials during different strain or deformation rates. Therefore, the performance of the neural network is desirable to be similar in all different cases and avoid favouring the prediction of a specific strain rates.
+
+
+
+MSE and R2 papers:
+
+\begin{itemize}
+    \item The Determination of relaxation modulus of time-dependent materials using neural networks, \cite{aulova2017determination}: This paper is from 2016, and the author states that there are practically no papers addressing the NN modelling of the behaviour of viscoelastic materials. The author also states that using data from experimental tests carry unavoidable errors and that this is considered an ill-posed problem. This work focuses on the stress relaxation curve of a material, a behaviour that can be approximated very well using generalization or parametric regression methods, such as the nonlinear parametric regression. The prediction of the NNs studied in here are compare against such models. The topologies of NNs studied in this work are the Multilayer Perceptron and the Radial Basis Funtion, both of which are considered as universal function approximators. In this work, two parameters are used to assess the performance of the neural networks: the MEAN SQUARE ERROR AND THE R0.95 (\%). In addition to this, the performance was assessed taking into consideration the capabilities of the neural networks in this three aspects: generalization, robustness and mathematical convergence.
+\end{itemize}
+
+
+
+
