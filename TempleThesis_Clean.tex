@@ -1,6 +1,6 @@
 \include{Macros/MacroFile1}
 
-\documentclass[twoside,11pt]{Classes/myThesis}
+\documentclass[twoside,12pt]{Classes/myThesis}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -15,6 +15,7 @@
               {./Chapters/Chapter_6/Chapter_6_Fig/}
               {./Chapters/Chapter_7/Chapter_7_Fig/}
               {./Appendix1/Appendix1_Fig/}
+              {./Appendix2/Appendix2_Fig/}
               {./ThesisFigs/}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -22,7 +23,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\theAuthor}{Rodrigo Daniel Solis Ortega}
 \newcommand{\authorEmail}{el14rdso@leeds.ac.uk}
-\newcommand{\myTitle}{Modelling and characterization of soft materials for bioinspired series-elastic actuators}
+\newcommand{\myTitle}{Modelling and Characterization of Soft Materials for Bioinspired Series-elastic Actuators}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \pdfinfo { /Title  (\myTitle)
            /Creator (TeX)
@@ -97,7 +98,7 @@
 \frontmatter
 
 %Insert empty page after title
-\newpage\null\thispagestyle{empty}\newpage
+\newpage\null\thispagestyle{empty}\addtocounter{page}{-1}\newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%% Include sections are required, or comment out to skip over %%%%%%%%%
@@ -110,7 +111,6 @@
 \listoffigures
 \let\cleardoublepage\clearpage
 \listoftables
-\let\cleardoublepage\clearpage
 \include{Abbreviations/Abbreviations}
 \include{Common_Symbols/Common_Symbols}
 
@@ -118,23 +118,30 @@
 
 \pagenumbering{arabic}
 \include{Chapters/Chapter_1/Chapter_1_File} %% file path for chapter tex files 
+\newpage\null\thispagestyle{plain}\newpage
 \include{Chapters/Chapter_2/Chapter_2_File}
+\newpage\null\thispagestyle{plain}\newpage
 \include{Chapters/Chapter_2a/Chapter_2a_File}
-\include{Chapters/Chapter_2b/Chapter_2b_File}
 \include{Chapters/Chapter_3/Chapter_3_File}
+\newpage\null\thispagestyle{plain}\newpage
 \include{Chapters/Chapter_4/Chapter_4_File}
 \include{Chapters/Chapter_5/Chapter_5_File}
 \include{Chapters/Chapter_6/Chapter_6_File}
+\newpage\null\thispagestyle{plain}\newpage
 \include{Chapters/Chapter_7/Chapter_7_File}
 
 \appendix
 \begin{appendices}
 \include{Appendix1/Appendix1}
+\newpage\null\thispagestyle{plain}\newpage
 \include{Appendix2/Appendix2}
 \end{appendices}
 %. More appendicies here.
+\cleardoublepage
+\phantomsection
 \addcontentsline{toc}{chapter}{References} % Adds References to contents page
 \bibliographystyle{unsrtnat} % bibliography style
 \renewcommand{\bibname}{References} 
+\newpage
 \bibliography{References/Bibliography} % References file
 \end{document}

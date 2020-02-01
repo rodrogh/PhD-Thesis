@@ -210,7 +210,7 @@
 \usepackage{geometry}
 \newgeometry{inner=4cm,outer=2cm}
 \setlength{\textheight}{23.5cm}
-\setlength{\textwidth}{15.2cm}
+\setlength{\textwidth}{15cm}
 \setlength{\footskip}{1.5cm}
 \pagestyle{fancy}
 \renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{\thechapter. #1 }}{}}
