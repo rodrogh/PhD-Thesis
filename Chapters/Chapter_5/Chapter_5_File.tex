@@ -151,10 +151,10 @@ In this work, both described scenarios are analysed. On the one hand, the propos
 
 \begin{table}[htbp!]
     \centering
-    \caption{Proposed ANN architectures. The rate-independent architectures are code-named ffRD1, ffRD2 and ffRD3. The rate-dependent architecture is ffRI4.}
+    \caption{Proposed ANN architectures. The rate-independent architectures are code-named FFRI1, FFRI2 and FFRI3. The rate-dependent architecture is FFRD4.}
     \begin{tabular}{lcccc}
     \toprule
-                            & FFRD1               & FFRD2                   & FFRD3                   & FFRI4\\
+                            & FFRI1               & FFRI2                   & FFRI3                   & FFRD4\\
     \hline
     \multirow{3}{*}{Inputs} & $\varepsilon_t$   & $\varepsilon_t$       & $\varepsilon_t$       & $\varepsilon_t$       \\
                             &                   & $\varepsilon_{t-1}$   & $\varepsilon_{t-1}$   & $\Dot{\varepsilon_t}$ \\
@@ -260,7 +260,7 @@ In order to isolate the impact of the selection of input parameters on the ANN g
     \label{fig:ANNGenNatR}
 \end{figure}
 
-In \Cref{fig:ANNGen4,fig:ANNGenNatR}, the FFRD4 architecture is identified as the one with the best generalization capabilities, i.e. smallest generalization error. This is the case for all the materials with the exception of the NatPolR material, for which the smallest generalization error was achieved by the FF2 architecture. Nonetheless, the difference between the FFRD4 and the FFRI2 architecture are minimal. Hence, following optimizations are based on the FFRD4 architecture. 
+In \Cref{fig:ANNGen4,fig:ANNGenNatR}, the FFRD4 architecture is identified as the one with the best generalization capabilities, i.e. smallest generalization error. This is the case for all the materials with the exception of the NatPolR material, for which the smallest generalization error was achieved by the FFRI2 architecture. Nonetheless, the difference between the FFRD4 and the FFRI2 architecture are minimal. Hence, following optimizations are based on the FFRD4 architecture. 
 In \Cref{fig:ANNGen4,fig:ANNGenNatR}, it can also be appreciated the beneficial impact of increasing the length of the strain history provided to the ANN. Nonetheless, these benefits are less than when using the strain rate as input. Initially, a couple of architectures were proposed, which contained the past values of the stress response of the material. The achieved generalization error on these architectures was at least one order of magnitude lower than the errors reported in \Cref{fig:ANNGen4,fig:ANNGenNatR}. The latter is misleading in thinking that architectures which have the past values of the stress as input are the best solution, because in a real application, this would translate into measuring the stress response of the material. This contradicts the main reason behind developing a modelling tool to predict the mechanical response of soft materials being implemented in a series-viscoelastic actuator, which is: transforming the force control problem into a position control problem. In other words, in a real robotic application, the deformation of the soft material is measured and this information is used to estimate the force response of the material, which is the force being transmitted to the load in a traditional SEA application. Therefore, an ANN with such an architecture was discarded. Finally, the optimization performed in here showed that the best architecture for accounting the velocity-dependency of the stress-strain curve of soft materials, is a Rate-Dependent one, specifically, the architecture code-named as FFRD4. The next optimization is focused on the number of neurons in the hidden layer.
 
 \subsection{Analysis: Optimal number of neurons}
@@ -304,9 +304,9 @@ The $R^2$ value, or coefficient of determination, indicates the fraction of the 
     &$R^2$ @ No. of Neurons             & 99.7  & 93.4  & 98.2  & 99.8  &96.5   & 97.7  &   81\\
     \midrule
     \multicolumn{9}{l}{PL-SLS model}\\
-    &Generalization Error (\%)          & 21    & 34.2  & 8.4   & 20.8  & 31.6  & 3.2   & 258\\
+    &Generalization Error (\%)          & 18.4    & 32.1  & 7.9   & 19.7  & 30.4  & 3   & 202\\
     &Tolerance Criteria                 & 40    & 90    & 20    & 50    & 10    & 90    & 50\\
-    &Strain Segments                    & 12    & 8     & 9     & 12    & 12    & 3     & 8\\
+    &Strain Segments                    & 12    & 6     & 9     & 12    & 12    & 3     & 8\\
     \bottomrule
     \end{tabular}
     \label{tbl:ANNvsSLS}
